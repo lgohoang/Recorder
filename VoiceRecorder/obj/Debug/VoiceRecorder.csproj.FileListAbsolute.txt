@@ -1,0 +1,12 @@
+E:\Development\Net\Projects\Recorder\VoiceRecorder\bin\Debug\lame.exe
+E:\Development\Net\Projects\Recorder\VoiceRecorder\bin\Debug\lame_enc.dll
+E:\Development\Net\Projects\Recorder\VoiceRecorder\bin\Debug\VoiceRecorder.exe.config
+E:\Development\Net\Projects\Recorder\VoiceRecorder\bin\Debug\VoiceRecorder.exe
+E:\Development\Net\Projects\Recorder\VoiceRecorder\bin\Debug\VoiceRecorder.pdb
+E:\Development\Net\Projects\Recorder\VoiceRecorder\obj\Debug\VoiceRecorder.csprojResolveAssemblyReference.cache
+E:\Development\Net\Projects\Recorder\VoiceRecorder\obj\Debug\VoiceRecorder.exe
+E:\Development\Net\Projects\Recorder\VoiceRecorder\obj\Debug\VoiceRecorder.pdb
+E:\Development\Net\Projects\Recorder\VoiceRecorder\bin\Debug\CSCore.dll
+E:\Development\Net\Projects\Recorder\VoiceRecorder\bin\Debug\CSCore.xml
+E:\Development\Net\Projects\Recorder\VoiceRecorder\bin\Debug\NAudio.dll
+E:\Development\Net\Projects\Recorder\VoiceRecorder\bin\Debug\NAudio.xml

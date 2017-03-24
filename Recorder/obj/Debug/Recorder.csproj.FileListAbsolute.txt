@@ -1,0 +1,9 @@
+E:\Development\Net\Projects\Recorder\Recorder\bin\Debug\lame\lame.exe
+E:\Development\Net\Projects\Recorder\Recorder\bin\Debug\lame\lame_enc.dll
+E:\Development\Net\Projects\Recorder\Recorder\bin\Debug\libmp3lame.32.dll
+E:\Development\Net\Projects\Recorder\Recorder\bin\Debug\libmp3lame.64.dll
+E:\Development\Net\Projects\Recorder\Recorder\bin\Debug\Recorder.exe.config
+E:\Development\Net\Projects\Recorder\Recorder\bin\Debug\Recorder.exe
+E:\Development\Net\Projects\Recorder\Recorder\bin\Debug\Recorder.pdb
+E:\Development\Net\Projects\Recorder\Recorder\obj\Debug\Recorder.exe
+E:\Development\Net\Projects\Recorder\Recorder\obj\Debug\Recorder.pdb
