@@ -2,6 +2,7 @@
 using NAudio.Wave;
 using System.Diagnostics;
 using System.IO;
+using NAudio.Wave.Compression;
 
 namespace VoiceRecorder
 {
@@ -17,7 +18,7 @@ namespace VoiceRecorder
             prg.Process();
         }
 
-        public void Recording(string filename)
+        public void Recording()
         {
             var output = Path.Combine(path, folder, filename + ".wav");
             waveSource = new WaveInEvent();
@@ -25,13 +26,14 @@ namespace VoiceRecorder
             waveSource.DataAvailable += new EventHandler<WaveInEventArgs>(waveSource_DataAvailable);
             waveSource.RecordingStopped += new EventHandler<StoppedEventArgs>(waveSource_RecordingStopped);
             waveFile = new WaveFileWriter(output, waveSource.WaveFormat);
+
+            Logger("Recorder start with filename = " + filename);
             waveSource.StartRecording();
         }
 
-        public void RecordStopped(string filename)
+        public void RecordStopped()
         {
             waveSource.StopRecording();
-            wtm(filename);
         }
 
         public void Init()
@@ -48,6 +50,8 @@ namespace VoiceRecorder
             }
         }
 
+        string filename = "";
+        string lastname = "";
         void waveSource_RecordingStopped(object sender, StoppedEventArgs e)
         {
             if (waveSource != null)
@@ -57,8 +61,18 @@ namespace VoiceRecorder
 
             if (waveFile != null)
             {
+                try
+                {
+                    waveFile.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    Logger(ex.ToString());
+                }
                 waveFile = null;
             }
+
+            wtm(lastname);
         }
 
         public void wtm(string filename)
@@ -74,53 +88,108 @@ namespace VoiceRecorder
             Process p = System.Diagnostics.Process.Start(psi);
             p.Close();
             p.Dispose();
+
+            Logger("Recorder saved: " + output);
         }
 
         static string folder = "Record";
         static string path = AppDomain.CurrentDomain.BaseDirectory;
-        static string filename = "";
+        
+        enum Status
+        {
+            waitRecord = 0,
+            waitStop = 1,
+        };
+
+        Status status = Status.waitRecord;
+
+
         public void Process()
         {
-            string lastname = "";
             bool recorder = false;
             while (true)
             {
+                Logger("Command = ", false);
 
-                if (recorder)
-                {
-                    Logger("Recorder started");
-                    recorder = true;
-                    lastname = filename;
-                    Recording(filename);
-
-                }
-
-                Logger("File name = ", false);
                 filename = Console.ReadLine();
                 if (filename.ToLower().Equals("exit"))
+                {
+                    if(status == Status.waitStop)
+                    {
+                        RecordStopped();
+                    }
                     return;
-
-                if (!filename.Equals(lastname))
-                {
-                    if (recorder)
-                    {
-                        Logger("Recorder stopped");
-                        RecordStopped(filename);
-                        recorder = false;
-                    }
-                    if (!filename.Equals(""))
-                    {
-                        recorder = true;
-                    }
-
                 }
-                else
+                    
+
+                switch (status)
                 {
-                    Logger("Recorder ...");
-                    recorder = false;
+                    case Status.waitRecord:
+                        if (filename.ToLower().Equals("start"))
+                        {
+                            status = Status.waitStop;
+                        }
+                        break;
+                    case Status.waitStop:
+
+                        if (filename.ToLower().Equals("stop"))
+                        {
+                            RecordStopped();
+                            recorder = false;
+                        }
+                        else if(recorder == false)
+                        {
+                            Recording();
+                            lastname = filename;
+                            recorder = true;
+                        }
+                        break;
                 }
+
             }
         }
+
+        //public void Process()
+        //{
+        //    bool recorder = false;
+        //    while (true)
+        //    {
+
+        //        if (recorder)
+        //        {
+        //            Logger("Recorder started");
+        //            recorder = true;
+        //            lastname = filename;
+        //            Recording();
+
+        //        }
+
+        //        Logger("File name = ", false);
+        //        filename = Console.ReadLine();
+        //        if (filename.ToLower().Equals("exit"))
+        //            return;
+
+        //        if (!filename.Equals(lastname))
+        //        {
+        //            if (recorder)
+        //            {
+        //                Logger("Recorder stopped");
+        //                RecordStopped();
+        //                recorder = false;
+        //            }
+        //            if (!filename.Equals(""))
+        //            {
+        //                recorder = true;
+        //            }
+
+        //        }
+        //        else
+        //        {
+        //            Logger("Recorder ...");
+        //            recorder = false;
+        //        }
+        //    }
+        //}
         public void Logger(string log, bool enter = true)
         {
             if (enter)
